@@ -12,6 +12,7 @@
     "format": "npm-run-all -s format:*",
     "format:fix": "prettier --write './src/**/*.{ts,json}'",
     "format:lint": "eslint ./src --ext .ts,.json",
+    "test": "jest",
     "clean": "rimraf ./dist",
     "release": "np",
     "prepublishOnly": "yarn build"
@@ -41,6 +42,7 @@
     "@rollup/plugin-babel": "^5.0.4",
     "@rollup/plugin-node-resolve": "^8.1.0",
     "@rollup/plugin-typescript": "^5.0.1",
+    "@types/jest": "^26.0.3",
     "@typescript-eslint/eslint-plugin": "^3.5.0",
     "@typescript-eslint/parser": "^3.5.0",
     "eslint": "^7.4.0",
@@ -48,12 +50,22 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "jest": "^26.1.0",
     "np": "^6.2.5",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
     "rollup": "^2.19.0",
     "rollup-plugin-typescript2": "^0.27.1",
+    "ts-jest": "^26.1.1",
     "typescript": "^3.9.6"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testMatch": [
+      "**/*.test.ts"
+    ]
   }
 }
