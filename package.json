@@ -1,0 +1,59 @@
+{
+  "name": "is-equal-type",
+  "version": "0.0.1",
+  "description": "Simple card component for react",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "npm-run-all -s clean build:rollup",
+    "build:rollup": "rollup -c",
+    "format": "npm-run-all -s format:*",
+    "format:fix": "prettier --write './src/**/*.{ts,json}'",
+    "format:lint": "eslint ./src --ext .ts,.json",
+    "clean": "rimraf ./dist",
+    "release": "np",
+    "prepublishOnly": "yarn build"
+  },
+  "keywords": [
+    "javascript",
+    "typescript"
+  ],
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kqito/is-same-type.git"
+  },
+  "author": "Nakagawa kaito",
+  "bugs": {
+    "url": "https://github.com/kqito/is-same-type/issues"
+  },
+  "homepage": "https://github.com/kqito/is-same-type#readme",
+  "devDependencies": {
+    "@babel/core": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
+    "@rollup/plugin-babel": "^5.0.4",
+    "@rollup/plugin-node-resolve": "^8.1.0",
+    "@rollup/plugin-typescript": "^5.0.1",
+    "@typescript-eslint/eslint-plugin": "^3.5.0",
+    "@typescript-eslint/parser": "^3.5.0",
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "np": "^6.2.5",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.19.0",
+    "rollup-plugin-typescript2": "^0.27.1",
+    "typescript": "^3.9.6"
+  }
+}
