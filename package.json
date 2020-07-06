@@ -1,7 +1,7 @@
 {
   "name": "is-equal-type",
   "version": "0.0.1",
-  "description": "Simple card component for react",
+  "description": "A module to deeply compare two values of an argument to evaluate if they are of the same type",
   "keywords": [
     "javascript",
     "typescript"
