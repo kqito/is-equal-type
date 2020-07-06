@@ -2,39 +2,64 @@
   "name": "is-equal-type",
   "version": "0.0.1",
   "description": "Simple card component for react",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
-  "license": "MIT",
-  "scripts": {
-    "build": "npm-run-all -s clean build:rollup",
-    "build:rollup": "rollup -c",
-    "format": "npm-run-all -s format:*",
-    "format:fix": "prettier --write './src/**/*.{ts,json}'",
-    "format:lint": "eslint ./src --ext .ts,.json",
-    "test": "jest",
-    "clean": "rimraf ./dist",
-    "release": "np",
-    "prepublishOnly": "yarn build"
-  },
   "keywords": [
     "javascript",
     "typescript"
   ],
+  "homepage": "https://github.com/kqito/is-same-type#readme",
+  "bugs": {
+    "url": "https://github.com/kqito/is-same-type/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kqito/is-same-type.git"
+  },
+  "license": "MIT",
+  "author": "Nakagawa kaito",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist",
     "LICENSE",
     "README.md"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kqito/is-same-type.git"
+  "scripts": {
+    "build": "npm-run-all -s clean build:rollup",
+    "build:rollup": "rollup -c",
+    "clean": "rimraf ./dist",
+    "format": "npm-run-all -s format:*",
+    "format:fix": "prettier --write './src/**/*.{ts,json}'",
+    "format:lint": "eslint ./src --ext .ts,.json",
+    "prepublishOnly": "yarn build",
+    "release": "np",
+    "test": "jest"
   },
-  "author": "Nakagawa kaito",
-  "bugs": {
-    "url": "https://github.com/kqito/is-same-type/issues"
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn test",
+      "...": "..."
+    }
   },
-  "homepage": "https://github.com/kqito/is-same-type#readme",
+  "lint-staged": {
+    "*.{ts, js, json}": [
+      "prettier --write",
+      "jest",
+      "git add"
+    ]
+  },
+  "jest": {
+    "testMatch": [
+      "**/*.test.ts"
+    ],
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    }
+  },
+  "dependencies": {
+    "lodash": "^4.17.15"
+  },
   "devDependencies": {
     "@babel/core": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
@@ -61,30 +86,5 @@
     "rollup-plugin-typescript2": "^0.27.1",
     "ts-jest": "^26.1.1",
     "typescript": "^3.9.6"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.ts$": "ts-jest"
-    },
-    "testMatch": [
-      "**/*.test.ts"
-    ]
-  },
-  "dependencies": {
-    "lodash": "^4.17.15"
-  },
-  "lint-staged": {
-    "*.{ts, js, json}": [
-      "prettier --write",
-      "jest",
-      "git add"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn test",
-      "...": "..."
-    }
   }
 }
