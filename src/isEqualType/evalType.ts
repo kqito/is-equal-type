@@ -1,6 +1,15 @@
 import { isObject, isPlainObject, isArray, isNull } from 'lodash';
+import { Options } from './options';
 
-export const checkEqualType = (target: unknown, expect: unknown): boolean => {
+export const evalType = (
+  target: unknown,
+  expect: unknown,
+  options?: Options
+): boolean => {
+  if (options && options.anyType === expect) {
+    return true;
+  }
+
   if (
     !isObject(target) &&
     !isObject(expect) &&

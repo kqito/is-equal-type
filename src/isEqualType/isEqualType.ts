@@ -1,6 +1,5 @@
-import { isObject, isPlainObject, isArray } from 'lodash';
 import { assertObject, assertArray } from '../utils/assert';
-import { checkEqualType } from '../utils/check';
+import { evalType } from './evalType';
 import { Options, defaultOptions } from './options';
 
 /**
@@ -39,12 +38,14 @@ export const isEqualType = (
     ...options,
   };
 
+  const { deep, anyType } = mergedOptions;
+
   const check = (targetValue: unknown, expectValue: unknown): boolean => {
-    if (expectValue === mergedOptions.anyType) {
+    if (expectValue === anyType) {
       return true;
     }
 
-    if (!checkEqualType(targetValue, expectValue)) {
+    if (!evalType(targetValue, expectValue, mergedOptions)) {
       return false;
     }
 
@@ -75,8 +76,11 @@ export const isEqualType = (
     return true;
   };
 
-  const checkWrapper = (targetValue: unknown) => (expectValue: unknown) =>
-    check(targetValue, expectValue);
+  const checkWrapper = (targetValue: unknown) => (expectValue: unknown) => {
+    return deep
+      ? check(targetValue, expectValue)
+      : evalType(targetValue, expectValue, mergedOptions);
+  };
 
   return check(target, expect);
 };

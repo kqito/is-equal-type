@@ -1,5 +1,5 @@
-import { checkEqualType } from './check';
-import { primitiveTests, objectTests, arrayTests, tests } from '../test/data';
+import { evalType } from '../evalType';
+import { primitiveTests, objectTests, arrayTests, tests } from './data';
 
 describe('check util', () => {
   describe('Should be true', () => {
@@ -7,7 +7,7 @@ describe('check util', () => {
       it(`Should be true with ${String(testValue)} === ${String(
         testValue
       )}`, () => {
-        expect(checkEqualType(testValue, testValue)).toBe(true);
+        expect(evalType(testValue, testValue)).toBe(true);
       });
     });
 
@@ -20,7 +20,7 @@ describe('check util', () => {
         it(`Should be true with ${String(testValue)} === ${String(
           expectValue
         )}`, () => {
-          expect(checkEqualType(testValue, expectValue)).toBe(true);
+          expect(evalType(testValue, expectValue)).toBe(true);
         });
       });
     });
@@ -34,7 +34,7 @@ describe('check util', () => {
         it(`Should be true with ${String(testValue)} === ${String(
           expectValue
         )}`, () => {
-          expect(checkEqualType(testValue, expectValue)).toBe(true);
+          expect(evalType(testValue, expectValue)).toBe(true);
         });
       });
     });
@@ -50,7 +50,7 @@ describe('check util', () => {
         it(`Should be false with ${String(testValue)} === ${String(
           expectValue
         )}`, () => {
-          expect(checkEqualType(testValue, expectValue)).toBe(false);
+          expect(evalType(testValue, expectValue)).toBe(false);
         });
       });
     });
