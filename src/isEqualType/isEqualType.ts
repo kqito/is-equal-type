@@ -3,6 +3,32 @@ import { assertObject, assertArray } from '../utils/assert';
 import { checkEqualType } from '../utils/check';
 import { Options, defaultOptions } from './options';
 
+/**
+ * Deeply compare two values of an argument to evaluate if they are of the same type.
+ *
+ * @param target The value to compare.
+ * @param expect The expected value.
+ * @param options The options for comparsion.
+ * @returns Returns true if the two values are the same type, false otherwise.
+ * @example
+ *
+ * const target = {
+ *   status: 200,
+ *   data: {
+ *     message: "hello world",
+ *   },
+ * };
+ *
+ * const expect = {
+ *   status: 0,
+ *   data: {
+ *     message: "",
+ *   },
+ * };
+ *
+ * console.log(isEqualType(target, expect));
+ * // => true
+ */
 export const isEqualType = (
   target: unknown,
   expect: unknown,
