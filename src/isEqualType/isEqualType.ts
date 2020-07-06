@@ -39,36 +39,40 @@ export const isEqualType = (
     ...defaultOptions,
   };
 
-  const check = (value1: unknown, value2: unknown): boolean => {
-    if (!checkEqualType(value1, value2)) {
+  const check = (targetValue: unknown, expectValue: unknown): boolean => {
+    if (!checkEqualType(targetValue, expectValue)) {
       return false;
     }
 
-    if (assertObject(value1) && assertObject(value2)) {
-      const entriesValue1 = Object.entries(value1);
-      const entriesValue2 = Object.entries(value2);
-      if (entriesValue1.length !== entriesValue2.length) {
+    if (assertObject(targetValue) && assertObject(expectValue)) {
+      const entriesTargetValue = Object.entries(targetValue);
+      const entriesExpectValue = Object.entries(expectValue);
+      if (entriesTargetValue.length !== entriesExpectValue.length) {
         return false;
       }
 
-      const checkEqualTypes = entriesValue1.map(([, v]) => checkWrapper(v));
-      return entriesValue2.every(([, v], index) => checkEqualTypes[index](v));
+      const checkEqualTypes = entriesTargetValue.map(([, v]) =>
+        checkWrapper(v)
+      );
+      return entriesExpectValue.every(([, v], index) =>
+        checkEqualTypes[index](v)
+      );
     }
 
-    if (assertArray(value1) && assertArray(value2)) {
-      if (value1.length !== value2.length) {
+    if (assertArray(targetValue) && assertArray(expectValue)) {
+      if (targetValue.length !== expectValue.length) {
         return false;
       }
 
-      const checkEqualTypes = value1.map((v) => checkWrapper(v));
-      return value2.every((v, index) => checkEqualTypes[index](v));
+      const checkEqualTypes = targetValue.map((v) => checkWrapper(v));
+      return expectValue.every((v, index) => checkEqualTypes[index](v));
     }
 
     return true;
   };
 
-  const checkWrapper = (value1: unknown) => (value2: unknown) =>
-    check(value1, value2);
+  const checkWrapper = (targetValue: unknown) => (expectValue: unknown) =>
+    check(targetValue, expectValue);
 
   return check(target, expect);
 };
