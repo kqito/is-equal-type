@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
     "rootDirs": ["src"],
+    "outDir": "./dist",
     "lib": ["ES2019"],
     "module": "esnext",
     "target": "ES2019",
     "allowJs": false,
     "checkJs": false,
-    "noEmit": true,
     "skipLibCheck": true,
+    "declaration": true,
     "declarationMap": false,
     "sourceMap": false,
     "esModuleInterop": true,
