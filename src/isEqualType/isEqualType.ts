@@ -35,11 +35,15 @@ export const isEqualType = (
   options?: Options
 ): boolean => {
   const mergedOptions = {
-    ...options,
     ...defaultOptions,
+    ...options,
   };
 
   const check = (targetValue: unknown, expectValue: unknown): boolean => {
+    if (expectValue === mergedOptions.anyType) {
+      return true;
+    }
+
     if (!checkEqualType(targetValue, expectValue)) {
       return false;
     }
