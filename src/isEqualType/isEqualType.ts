@@ -11,22 +11,34 @@ import { Options, defaultOptions } from './options';
  * @returns Returns true if the two values are the same type, false otherwise.
  * @example
  *
- * const target = {
+ * import isEqualType from "is-equal-type";
+ *
+ * const successData = {
  *   status: 200,
  *   data: {
  *     message: "hello world",
+ *     favorites: ["ts", "js", "react"],
  *   },
+ * };
+ *
+ * const failureData = {
+ *   status: 200,
+ *   data: {},
  * };
  *
  * const expect = {
  *   status: 0,
  *   data: {
  *     message: "",
+ *     favorites: [""],
  *   },
  * };
  *
- * console.log(isEqualType(target, expect));
+ * console.log(isEqualType(successData, expect));
  * // => true
+ *
+ * console.log(isEqualType(failureData, expect));
+ * // => false
  */
 export const isEqualType = (
   target: unknown,
@@ -65,12 +77,16 @@ export const isEqualType = (
     }
 
     if (assertArray(targetValue) && assertArray(expectValue)) {
-      if (targetValue.length !== expectValue.length) {
+      if (targetValue.length === 0) {
+        return true;
+      }
+
+      // Only one type can be specified in an array
+      if (expectValue.length !== 1) {
         return false;
       }
 
-      const checkEqualTypes = targetValue.map((v) => checkWrapper(v));
-      return expectValue.every((v, index) => checkEqualTypes[index](v));
+      return targetValue.every((v) => checkWrapper(v)(expectValue[0]));
     }
 
     return true;
