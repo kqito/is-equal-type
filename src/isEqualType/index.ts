@@ -1,0 +1,1 @@
+export { isEqualType } from './isEqualType';

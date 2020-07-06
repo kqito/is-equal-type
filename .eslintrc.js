@@ -33,5 +33,6 @@ module.exports = {
         optionalDependencies: false,
       },
     ],
+    'no-use-before-define': 0,
   },
 };
