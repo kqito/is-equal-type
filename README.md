@@ -1,5 +1,7 @@
 # is-equal-type
 
+![build status](https://github.com/kqito/is-equal-type/workflows/Node.js%20CI/badge.svg)
+
 A module to deeply compare two values of an argument to evaluate if they are of the same type.
 
 ## Why use?
