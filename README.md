@@ -45,6 +45,31 @@ console.log(isEqualType(failureData, expect));
 // => false
 ```
 
+### Any type
+You can specify 'any' if you don't know what value to expect, or if you want to allow for more than one type.
+
+Also, you can change the character that represents type any by specifying the 'anyType' option.
+
+```javascript
+import isEqualType from "is-equal-type";
+
+const successData = {
+  status: 200,
+  data: {
+    message: "hello world",
+    favorites: ["ts", "js", "react"],
+  },
+};
+
+const expect = {
+  status: 0,
+  data: "any",
+};
+
+console.log(isEqualType(successData, expect));
+// => true
+```
+
 ## Options
 The following options can be set.
 
