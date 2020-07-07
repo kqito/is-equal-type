@@ -5,7 +5,7 @@
 A module to deeply compare two values of an argument to evaluate if they are of the same type.
 
 ## Why use?
-- You can easily verify that the data you're getting from fetch API, for example, is really what you're expecting.
+- You can easily verify that the JSON data you're getting from fetch API, for example, is really what you're expecting.
 - By predefining the data you expect, you can clarify the specification like a document.
 
 ## Installation
