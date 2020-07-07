@@ -2,6 +2,8 @@ import { assertObject, assertArray } from '../utils/assert';
 import { evalType } from './evalType';
 import { Options, defaultOptions } from './options';
 
+type ValueHandler = (targetValue: unknown) => (expectValue: unknown) => boolean;
+
 /**
  * Deeply compare two values of an argument to evaluate if they are of the same type.
  *
@@ -50,53 +52,57 @@ export const isEqualType = (
     ...options,
   };
 
-  const { deep, anyType } = mergedOptions;
-
-  const check = (targetValue: unknown, expectValue: unknown): boolean => {
-    if (expectValue === anyType) {
-      return true;
-    }
-
-    if (!evalType(targetValue, expectValue, mergedOptions)) {
-      return false;
-    }
-
-    if (assertObject(targetValue) && assertObject(expectValue)) {
-      const entriesTargetValue = Object.entries(targetValue);
-      const entriesExpectValue = Object.entries(expectValue);
-      if (entriesTargetValue.length !== entriesExpectValue.length) {
-        return false;
-      }
-
-      const checkEqualTypes = entriesTargetValue.map(([, v]) =>
-        checkWrapper(v)
-      );
-      return entriesExpectValue.every(([, v], index) =>
-        checkEqualTypes[index](v)
-      );
-    }
-
-    if (assertArray(targetValue) && assertArray(expectValue)) {
-      if (targetValue.length === 0) {
-        return true;
-      }
-
-      // Only one type can be specified in an array
-      if (expectValue.length !== 1) {
-        return false;
-      }
-
-      return targetValue.every((v) => checkWrapper(v)(expectValue[0]));
-    }
-
-    return true;
-  };
-
-  const checkWrapper = (targetValue: unknown) => (expectValue: unknown) => {
-    return deep
+  const valueHandler: ValueHandler = (targetValue: unknown) => (
+    expectValue: unknown
+  ) => {
+    return mergedOptions.deep
       ? check(targetValue, expectValue)
       : evalType(targetValue, expectValue, mergedOptions);
   };
 
+  const check = (targetValue: unknown, expectValue: unknown): boolean => {
+    if (assertObject(targetValue) && assertObject(expectValue)) {
+      return expandObject(targetValue, expectValue, valueHandler);
+    }
+
+    if (assertArray(targetValue) && assertArray(expectValue)) {
+      return expandArray(targetValue, expectValue, valueHandler);
+    }
+
+    return evalType(targetValue, expectValue, mergedOptions);
+  };
+
   return check(target, expect);
+};
+
+const expandObject = (
+  targetValue: Record<string, unknown>,
+  expectValue: Record<string, unknown>,
+  valueHandler: ValueHandler
+) => {
+  const entriesTargetValue = Object.entries(targetValue);
+  const entriesExpectValue = Object.entries(expectValue);
+  if (entriesTargetValue.length !== entriesExpectValue.length) {
+    return false;
+  }
+
+  const checkEqualTypes = entriesTargetValue.map(([, v]) => valueHandler(v));
+  return entriesExpectValue.every(([, v], index) => checkEqualTypes[index](v));
+};
+
+const expandArray = (
+  targetValue: unknown[],
+  expectValue: unknown[],
+  valueHandler: ValueHandler
+) => {
+  if (targetValue.length === 0) {
+    return true;
+  }
+
+  // Only one type can be specified in an array
+  if (expectValue.length !== 1) {
+    return false;
+  }
+
+  return targetValue.every((v) => valueHandler(v)(expectValue[0]));
 };

@@ -19,7 +19,7 @@ export const evalType = (
     return typeof target === typeof expect;
   }
 
-  // nullでないかつobjectの場合
+  // if non-null and an object
   return (
     (isNull(target) && isNull(expect)) ||
     (isPlainObject(target) && isPlainObject(expect)) ||
