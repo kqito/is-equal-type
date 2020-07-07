@@ -11,6 +11,7 @@ describe('isEqualType', () => {
           expect(isEqualType(test, [''])).toBe(true);
           expect(isEqualType(test, [0])).toBe(false);
           expect(isEqualType(test, [])).toBe(false);
+          expect(isEqualType(test, 'any')).toBe(true);
 
           // Two or more specifications expect false.
           expect(isEqualType(test, ['', 0])).toBe(false);
@@ -97,6 +98,47 @@ describe('isEqualType', () => {
               },
             ]
           )
+        ).toBe(false);
+      });
+    });
+    expect(isEqualType([{ key: null }], [{ key: 'any' }])).toBe(true);
+
+    describe('Object', () => {
+      it('Should be verify with expect object value', () => {
+        const targets = [
+          { key1: '' },
+          { key1: '', key2: 0 },
+          { key1: { key2: '' } },
+        ];
+
+        targets.forEach((test) => {
+          expect(isEqualType(test, test)).toBe(true);
+          expect(isEqualType(test, {})).toBe(false);
+          expect(isEqualType(test, { key1: 0 })).toBe(false);
+          expect(isEqualType(test, 'any')).toBe(true);
+
+          // Two or more specifications expect false.
+          expect(isEqualType(test, { key1: '', key2: '', key3: '' })).toBe(
+            false
+          );
+        });
+
+        // Empty object
+        expect(isEqualType({}, {})).toBe(true);
+        expect(isEqualType({}, { key1: '' })).toBe(false);
+
+        // Nested object
+        expect(
+          isEqualType({ key1: { key2: '' } }, { key1: { key2: '' } })
+        ).toBe(true);
+        expect(
+          isEqualType({ key1: { key2: '' } }, { key1: { key2: 'any' } })
+        ).toBe(true);
+        expect(isEqualType({ key1: { key2: '' } }, { key1: { key2: 0 } })).toBe(
+          false
+        );
+        expect(
+          isEqualType({ key1: { key2: '' } }, { key1: { key2: '', key3: '' } })
         ).toBe(false);
       });
     });
