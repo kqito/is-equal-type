@@ -77,8 +77,9 @@ The following options can be set.
 
 | Property | Type | Default | Description |
 |-|:-:|:-:|-|
-|deep|boolean \| undefined|true|Deeply compare objects, arrays, etc.
+|deep|boolean \| undefined|true|Deeply compare objects and arrays.
 |anyType|string \| undefined|'any'|Treats the specified string as type any.
+|strictKeyChecks|boolean \| undefined|true|Check that the keys of the dictionary are the same.
 
 ## Support Type
 This module can compare the following types.

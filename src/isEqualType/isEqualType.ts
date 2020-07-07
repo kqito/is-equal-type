@@ -62,7 +62,12 @@ export const isEqualType = (
 
   const check = (targetValue: unknown, expectValue: unknown): boolean => {
     if (assertObject(targetValue) && assertObject(expectValue)) {
-      return expandObject(targetValue, expectValue, valueHandler);
+      return expandObject(
+        targetValue,
+        expectValue,
+        valueHandler,
+        mergedOptions
+      );
     }
 
     if (assertArray(targetValue) && assertArray(expectValue)) {
@@ -78,7 +83,8 @@ export const isEqualType = (
 const expandObject = (
   targetValue: Record<string, unknown>,
   expectValue: Record<string, unknown>,
-  valueHandler: ValueHandler
+  valueHandler: ValueHandler,
+  options: Options
 ) => {
   const entriesTargetValue = Object.entries(targetValue);
   const entriesExpectValue = Object.entries(expectValue);
@@ -86,8 +92,24 @@ const expandObject = (
     return false;
   }
 
-  const checkEqualTypes = entriesTargetValue.map(([, v]) => valueHandler(v));
-  return entriesExpectValue.every(([, v], index) => checkEqualTypes[index](v));
+  // not check the key of the object
+  if (!options.strictKeyChecks) {
+    const checkEqualTypes = entriesTargetValue.map(([, v]) => valueHandler(v));
+    return entriesExpectValue.every(([, v], index) =>
+      checkEqualTypes[index](v)
+    );
+  }
+
+  const checkKeys = (key1: string) => (key2: string) => key1 === key2;
+  const checkEqualObject = entriesTargetValue.map(([key, value]) => ({
+    checkKey: checkKeys(key),
+    checkType: valueHandler(value),
+  }));
+
+  return entriesExpectValue.every(([k, v], index) => {
+    const { checkKey, checkType } = checkEqualObject[index];
+    return checkKey(k) && checkType(v);
+  });
 };
 
 const expandArray = (

@@ -205,5 +205,72 @@ describe('isEqualType', () => {
         );
       });
     });
+
+    describe('"strictKeyChecks" option', () => {
+      it('Should be varify when deep option is true', () => {
+        expect(isEqualType({}, {})).toBe(true);
+        expect(isEqualType({ key1: '' }, { key2: '' })).toBe(false);
+        expect(
+          isEqualType(
+            {
+              key1: {
+                key2: '',
+              },
+            },
+            { key1: { key2: '' } }
+          )
+        ).toBe(true);
+        expect(
+          isEqualType(
+            {
+              key1: {
+                key2: '',
+              },
+            },
+            { key1: { key3: '' } }
+          )
+        ).toBe(false);
+      });
+
+      it('Should be varify when deep option is false', () => {
+        expect(isEqualType({}, {}, { strictKeyChecks: false })).toBe(true);
+        expect(
+          isEqualType({ key1: '' }, { key2: '' }, { strictKeyChecks: false })
+        ).toBe(true);
+        expect(
+          isEqualType(
+            {
+              key1: {
+                key2: '',
+              },
+            },
+            { key1: { key2: '' } },
+            { strictKeyChecks: false }
+          )
+        ).toBe(true);
+        expect(
+          isEqualType(
+            {
+              key1: {
+                key2: '',
+              },
+            },
+            { key1: { key3: '' } },
+            { strictKeyChecks: false }
+          )
+        ).toBe(true);
+        expect(
+          isEqualType(
+            {
+              key1: {
+                key2: '',
+              },
+            },
+            { key1: { key3: 0 } },
+            { strictKeyChecks: false }
+          )
+        ).toBe(false);
+      });
+    });
   });
 });

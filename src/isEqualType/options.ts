@@ -1,6 +1,7 @@
 export type Options = {
   deep?: boolean;
   anyType?: string;
+  strictKeyChecks?: boolean;
 };
 
 type ExcludeUndefined<T> = T extends Record<string, unknown>
@@ -10,4 +11,5 @@ type ExcludeUndefined<T> = T extends Record<string, unknown>
 export const defaultOptions: ExcludeUndefined<Options> = {
   deep: true,
   anyType: 'any',
+  strictKeyChecks: true,
 };
