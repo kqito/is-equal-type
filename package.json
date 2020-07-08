@@ -8,13 +8,13 @@
     "module",
     "utility"
   ],
-  "homepage": "https://github.com/kqito/is-same-type#readme",
+  "homepage": "https://github.com/kqito/is-equal-type#readme",
   "bugs": {
-    "url": "https://github.com/kqito/is-same-type/issues"
+    "url": "https://github.com/kqito/is-equal-type/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kqito/is-same-type.git"
+    "url": "git+https://github.com/kqito/is-equal-type.git"
   },
   "license": "MIT",
   "author": "Nakagawa kaito",
