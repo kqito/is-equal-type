@@ -1,6 +1,6 @@
 {
   "name": "is-equal-type",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A module to deeply compare two values of an argument to evaluate if they are of the same type",
   "keywords": [
     "javascript",
